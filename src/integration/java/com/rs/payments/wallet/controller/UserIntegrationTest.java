@@ -3,6 +3,7 @@ package com.rs.payments.wallet.controller;
 import com.rs.payments.wallet.BaseIntegrationTest;
 import com.rs.payments.wallet.dto.CreateUserRequest;
 import com.rs.payments.wallet.model.User;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag("integration")
 class UserIntegrationTest extends BaseIntegrationTest {
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -26,7 +28,7 @@ class UserIntegrationTest extends BaseIntegrationTest {
         String url = "http://localhost:" + port + "/users";
         ResponseEntity<User> response = restTemplate.postForEntity(url, request, User.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isNotNull();
         assertThat(response.getBody().getUsername()).isEqualTo("testuser");
@@ -46,7 +48,7 @@ class UserIntegrationTest extends BaseIntegrationTest {
         String url = "http://localhost:" + port + "/users";
         ResponseEntity<User> response = restTemplate.postForEntity(url, entity, User.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isNotEqualTo(providedId);
         assertThat(response.getBody().getUsername()).isEqualTo("testuser2");

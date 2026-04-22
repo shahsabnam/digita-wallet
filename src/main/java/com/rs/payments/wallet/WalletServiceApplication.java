@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Wallet Service API", version = "0.0.1", description = "API for managing digital wallets"))
-public final class WalletServiceApplication {
+public class WalletServiceApplication {
 
     private WalletServiceApplication() {
     }
