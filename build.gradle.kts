@@ -61,7 +61,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     runtimeOnly("org.postgresql:postgresql")
-    
+
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -74,6 +74,7 @@ dependencies {
     implementation("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
+    compileOnly("com.github.spotbugs:spotbugs-annotations:4.9.0")
 }
 
 val integrationTest = tasks.register<Test>("integrationTest") {
@@ -104,12 +105,17 @@ tasks.withType<com.github.spotbugs.snom.SpotBugsTask> {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
     finalizedBy("jacocoTestReport")
 }
 
+tasks.named<Test>("test") {
+    useJUnitPlatform {
+        excludeTags("integration")
+    }
+}
+
 tasks.jacocoTestReport {
-    dependsOn(tasks.test, integrationTest)
+    dependsOn(tasks.test)
     reports {
         xml.required.set(true)
         html.required.set(true)

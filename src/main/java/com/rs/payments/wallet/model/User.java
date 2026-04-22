@@ -1,6 +1,7 @@
 package com.rs.payments.wallet.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.UUID;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,6 +27,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "User entity")
+@SuppressWarnings("PMD.ShortClassName")
+@SuppressFBWarnings({"EI_EXPOSE_REP", "EI_EXPOSE_REP2"})
 public class User {
 
     @Id
